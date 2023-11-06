@@ -14,6 +14,7 @@ public class CarController : MonoBehaviour
     public float bodyTilt = 30;
 
     public Vector3 moveForce;
+    public ParticleSystem speedParticles;
 
     public void Update()
     {
@@ -34,6 +35,23 @@ public class CarController : MonoBehaviour
 
         float roll = Mathf.Lerp(0, bodyTilt, Mathf.Abs(x)) * Mathf.Sign(x);
         body.localRotation = Quaternion.Euler(Vector3.forward * (roll * moveForce.magnitude)) ;
+        //Debug.Log(moveForce.magnitude);
 
+        if (moveForce.magnitude >= 10)
+        {
+            if (speedParticles.isStopped)
+            {
+                speedParticles.Play();
+            }
+            
+        }
+        else
+        {
+            if (!speedParticles.isStopped)
+            {
+                speedParticles.Stop();
+            }
+            
+        }
     }
 }
